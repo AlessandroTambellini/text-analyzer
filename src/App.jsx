@@ -58,33 +58,32 @@ export default function App() {
         <section>
           <h3>Unique Words</h3>
           <p>
-            {[...textAnalysis.uniqueWords].length}: {/*  */}
+            ({[...textAnalysis.uniqueWords].length}) {/*  */}
             {[...textAnalysis.uniqueWords].map((word, idx) => {
               return (<span key={idx}>{word}, </span>);
             })}
           </p>
         </section>
-        <section>
-          <h3>Char Frequency</h3>
+        <section id="char-frequency-section">
+          <h3>Char Frequency (number of times)</h3>
           <p>
             {Object.entries(textAnalysis.charFrequency).sort((a, b) => {
               return a[1] < b[1] ? 1 : -1
             }).map(([key, value], idx) => {
-              return (<span key={idx}>[{key}: {value}], </span>);
+              return (<span key={idx}>[ {key}: {value} ],</span>);
             })}
           </p>
         </section>
         <section>
           <h3>Chars Histogram</h3>
-          <p>
-            {textAnalysis.charsHistogram.map(([key, value]) => {
-              return (
-                <>
-                  <span className="char-meter" key={key}>{key}<meter value={value} min="0" max="100">{value}%</meter> {value}%</span>
-                  <br />
-                </>);
-            })}
-          </p>
+          {textAnalysis.charsHistogram.map(([key, value]) => {
+            return (
+              <p key={key} className="char-meter-p">
+                <span className="text-center">{key}</span>
+                <meter value={value} min="0" max="100" low="2.1" high="4.2">{value}%</meter>
+                <span className="text-center">{value}%</span>
+              </p>);
+          })}
         </section>
       </article>
     </main>

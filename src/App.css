@@ -1,5 +1,5 @@
-h1 {
-  padding-top: var(--size-600);
+main {
+  padding: 4vh 0;
 }
 
 #text-form {
@@ -25,14 +25,61 @@ h1 {
   padding-left: var(--size-800);
 }
 
-.char-meter {
+#char-frequency-section > p {
   display: flex;
-  gap: var(--size-400);
+  flex-wrap: wrap;
+  gap: var(--size-200);
 }
 
-.char-meter meter {
-  height: auto;
-  width: 100%;
+.char-meter-p {
+  display: inline-grid;
+  grid-template-columns: calc(var(--fs-medium)*2) min-content calc(var(--fs-medium)*4);
+}
+
+.char-meter-p meter {
+  align-self: center;
+}
+
+
+meter,
+meter::-webkit-meter-bar,
+meter::-webkit-meter-optimum-value,
+meter::-webkit-meter-suboptimum-value,
+meter::-webkit-meter-even-less-good-value,
+meter::-webkit-meter-inner-element {
+    border-radius: 0;
+    border: none;
+}
+
+meter {
+  --optimum: forestgreen;
+  --sub-optimum: gold;
+  --sub-sub-optimum: crimson;
+
+  appearance: none;
+  -moz-appearance: meter;
+  -webkit-appearance: meter;
+}
+
+/* Firefox */
+meter:-moz-meter-optimum::-moz-meter-bar {
+  background: var(--optimum);
+}
+/* Chrome, etc. */
+meter::-webkit-meter-optimum-value {
+  background: var(--optimum);
+}
+meter:-moz-meter-sub-optimum::-moz-meter-bar {
+  background: var(--sub-optimum);
+}
+meter::-webkit-meter-suboptimum-value {
+  background: var(--sub-optimum);
+}
+meter:-moz-meter-sub-sub-optimum::-moz-meter-bar {
+  background: var(--sub-sub-optimum);
+}
+meter::-webkit-meter-even-less-good-value {
+  background: var(--sub-sub-optimum);
 }
 
 .error-msg {
