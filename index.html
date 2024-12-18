@@ -1,20 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>React + TypeScript + Replit</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/index.jsx"></script>
-		
-    <!--
-    This script places a badge on your repl's full-browser view back to your repl's cover
-    page. Try various colors for the theme: dark, light, red, orange, yellow, lime, green,
-    teal, blue, blurple, magenta, pink!
-    -->
-    <script src="https://replit.com/public/js/replit-badge.js" theme="blue" defer></script>
-  </body>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Get some statistics about text">
+    
+    <title>Text Analyzer</title>
+    
+    <link rel="stylesheet" href="./index.css">
+    <script src="./index.js" defer></script>
+</head>
+<body>
+<main>
+    <h1>Text Analizer</h1>
+
+    <form id="text-form">
+        <textarea placeholder="Insert text"></textarea>
+        <button type='submit'>Analyze</button>
+    </form>
+
+    <article id="text-analysis">
+        <h2>Text Analysis</h2>
+
+        <p id="num-of-words">
+            Number of Words: <span></span> 
+        </p>
+        
+        <h3>Words Set</h3>
+        <p id="words-set">
+        </p>
+
+        <h3>Char Occurrence</h3>
+        <p id="char-occurrence">
+        </p>
+
+        <p id="tot-num-chars">
+            (empty spaces are excluded)<br>
+            Tot. Number of Chars: <span></span> 
+        </p>
+    </article>
+</main>
+</body>
 </html>
