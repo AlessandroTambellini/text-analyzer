@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Analyzer</title>
+
+    <style>
+        body {
+            font-family: monospace;
+            font-size: 1.4rem;
+        }
+
+        textarea,
+        button {
+            font-size: inherit;
+        }
+
+        summary:hover {
+            font-weight: 600;
+            background-color: rgb(245, 245, 245);
+            cursor: pointer;
+        }
+
+        .frequency-list li {
+            padding: .15em .5em;
+            margin-block: .15em;
+        }
+    </style>
+</head>
+<body>
+    <form>
+        <textarea name="text"></textarea>
+        <button type="submit">analyze</button>
+    </form>
+
+    <ul>
+        <li>#chars: <span id="res_num-of-chars"></span></li>
+        <li>#words: <span id="res_num-of-words"></span></li>
+
+        <li>Size of chars-set: <span id="res_chars-set-size"></span></li>
+        <li>Size of words-set: <span id="res_words-set-size"></span></li>
+
+        <li>
+            <details>
+                <summary>Char frequency</summary>
+                <ol id="char-frequency-list" class="frequency-list"></ol>
+            </details>
+        </li>
+        <li>
+            <details>
+                <summary>Word frequency</summary>
+                <ol id="word-frequency-list" class="frequency-list"></ol>
+            </details>
+        </li>
+    </ul>
+
+    <script>
+        const form = document.querySelector('form');
+        const textarea = form.querySelector('textarea');
+        const res_numOfChars = document.querySelector('#res_num-of-chars');
+        const res_numOfWords = document.querySelector('#res_num-of-words');
+        const res_charsSetSize = document.querySelector('#res_chars-set-size');
+        const res_wordsSetSize = document.querySelector('#res_words-set-size');
+        const char_frequency_list = document.querySelector('#char-frequency-list');
+        const word_frequency_list = document.querySelector('#word-frequency-list');
+
+        form.addEventListener('submit', e => 
+        {
+            e.preventDefault();
+
+            let num_of_chars = 0;
+            let num_of_words = 0;
+
+            const chars_map = new Map();
+            const words_map = new Map();
+
+            textarea.value.trim().split(' ').forEach(substr => 
+            {
+                const word_chars = [];
+                
+                for (
+                    let char = substr[0]?.toLowerCase(), i = 0; 
+                    char >= 'a' && char <= 'z'; 
+                    char = substr[++i]
+                ) {
+                    word_chars.push(char); 
+                    chars_map.set(char, 1 + (chars_map.get(char) ?? 1));
+                }
+
+                num_of_chars += word_chars.length;
+                if (word_chars.length > 0) {
+                    num_of_words++;
+                    const word = word_chars.join('');
+                    words_map.set(word, 1 + (words_map.get(word) ?? 1));
+                }
+            });
+
+            res_numOfChars.textContent = num_of_chars;
+            res_numOfWords.textContent = num_of_words;
+            res_charsSetSize.textContent = chars_map.size;
+            res_wordsSetSize.textContent = words_map.size;
+
+            const char_entries = [...chars_map].sort(desc)
+            const word_entries = [...words_map].sort(desc)
+
+            char_frequency_list.replaceChildren();
+            char_entries.forEach(([key, value]) => {
+                const li = document.createElement('li');
+                li.textContent = `${key}: ${value}`;
+                const width = value/num_of_chars*100;
+                li.style.background = `linear-gradient(to right, pink ${width}%, transparent ${width}%)`;
+                char_frequency_list.appendChild(li);
+            });
+            
+            word_frequency_list.replaceChildren();
+            word_entries.forEach(([key, value]) => {
+                const li = document.createElement('li');
+                li.textContent = `${key}: ${value}`;
+                const width = value/num_of_words*100;
+                li.style.background = `linear-gradient(to right, #b2ffe5 ${width}%, transparent ${width}%)`;
+                word_frequency_list.appendChild(li);
+            });
+        });
+
+        function desc(a, b) {
+            if (a[1] === b[1]) {
+                return a[0] < b[0] ? -1 : 1;
+            } else {
+                return b[1] - a[1];
+            }
+        }
+    </script>
+</body>
+</html>
