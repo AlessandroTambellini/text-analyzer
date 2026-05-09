@@ -6,9 +6,20 @@
     <title>Text Analyzer</title>
 
     <style>
+        :root {
+            color-scheme: light dark;
+            --text-color: light-dark(#343A40, #f9fafb); 
+            --page-background: light-dark(#f9f9f9, #1a1c20);
+            --hover-color: light-dark(rgb(245, 245, 245), rgb(10, 10, 10))
+        }
+
         body {
             font-family: monospace;
             font-size: 1.4rem;
+            color: var(--text-color);
+            background-color: var(--page-background);
+            margin: 0;
+            padding: 1em;
         }
 
         textarea,
@@ -16,9 +27,27 @@
             font-size: inherit;
         }
 
+        textarea {
+            padding: 1ch 1em;
+            hyphens: auto;
+            line-height: 1.4;
+            width: min(70ch, 90%);
+            /* This feature has limited support among browsers, 
+            but it's so handy that I use it anyway. */
+            field-sizing: content;
+        }
+        textarea:focus-visible {
+            outline: none;
+        }
+
+        summary {
+            width: fit-content;
+            padding: .85ch 2em .85ch 1em;
+        }
+
         summary:hover {
             font-weight: 600;
-            background-color: rgb(245, 245, 245);
+            background-color: var(--hover-color);
             cursor: pointer;
         }
 
@@ -35,11 +64,11 @@
     </form>
 
     <ul>
-        <li>#chars: <span id="res_num-of-chars"></span></li>
-        <li>#words: <span id="res_num-of-words"></span></li>
+        <li>Number of chars: <span id="res_num-of-chars"></span></li>
+        <li>Number of words: <span id="res_num-of-words"></span></li>
 
-        <li>Size of chars-set: <span id="res_chars-set-size"></span></li>
-        <li>Size of words-set: <span id="res_words-set-size"></span></li>
+        <li>Number of different chars: <span id="res_chars-set-size"></span></li>
+        <li>Number of different words: <span id="res_words-set-size"></span></li>
 
         <li>
             <details>
@@ -109,7 +138,7 @@
                 const li = document.createElement('li');
                 li.textContent = `${key}: ${value}`;
                 const width = value/num_of_chars*100;
-                li.style.background = `linear-gradient(to right, pink ${width}%, transparent ${width}%)`;
+                li.style.background = `linear-gradient(to right, rgb(209, 42, 209) ${width}%, transparent ${width}%)`;
                 char_frequency_list.appendChild(li);
             });
             
@@ -118,7 +147,7 @@
                 const li = document.createElement('li');
                 li.textContent = `${key}: ${value}`;
                 const width = value/num_of_words*100;
-                li.style.background = `linear-gradient(to right, #b2ffe5 ${width}%, transparent ${width}%)`;
+                li.style.background = `linear-gradient(to right, #69d3b0 ${width}%, transparent ${width}%)`;
                 word_frequency_list.appendChild(li);
             });
         });
