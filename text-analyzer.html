@@ -114,14 +114,22 @@
                     char = substr[++i]
                 ) {
                     word_chars.push(char); 
-                    chars_map.set(char, 1 + (chars_map.get(char) ?? 1));
+                    if (chars_map.get(char)) {
+                        chars_map.set(char, 1 + chars_map.get(char));
+                    } else {
+                        chars_map.set(char, 1);
+                    }
                 }
 
                 num_of_chars += word_chars.length;
                 if (word_chars.length > 0) {
                     num_of_words++;
                     const word = word_chars.join('');
-                    words_map.set(word, 1 + (words_map.get(word) ?? 1));
+                    if (words_map.get(word)) {
+                        words_map.set(word, words_map.get(word)+1);
+                    } else {
+                        words_map.set(word, 1);
+                    }
                 }
             });
 
