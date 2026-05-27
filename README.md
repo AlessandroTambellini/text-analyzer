@@ -1,2 +1,2 @@
 # Text Analyzer
-Simple app to get some metrics out of a text
+Get basic metrics out of a text input
